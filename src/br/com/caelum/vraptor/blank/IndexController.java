@@ -3,10 +3,10 @@ package br.com.caelum.vraptor.blank;
 import java.util.List;
 
 import br.com.bean.Item;
+import br.com.bean.Pedido;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
-import br.com.controller.PedidoController;
 import br.com.dao.ItemDAO;
 
 @Resource
@@ -34,7 +34,23 @@ public class IndexController {
 
 	@Path("/")
 	public void index() {
-		(new PedidoController()).salvarPedido1();
+
+		// testar atualizacao de pedidos....
+		// Pedido p = new Pedido();
+		// p.setCliente("Teste Atualização");
+		// p.setData("15/02/2012");
+		//
+		// // p.setItens(new ArrayList<Item>());
+		// PedidoDAO pdao = (new PedidoDAO());
+		// pdao.salvar(p);
+		// p.getItens().add(new Item("ta1", 3, 11));
+		// p.getItens().add(new Item("ta4", 65, .12));
+		// pdao.salvar(p);
+		// if (p.getItens() == null)
+		// p.setItens(new ArrayList<Item>());
+		// p.getItens().add(new Item("ta54", 544, .02));
+		// pdao.salvar(p);
+		// (new PedidoController()).salvarPedido1();
 		// result.include("variable", "Gesner Junior");
 		// Item i = new Item();
 		// i.setDescricao("Novo item");
@@ -45,14 +61,15 @@ public class IndexController {
 
 	}
 
-	public Item cadastrar() {
+	public Pedido cadastrar() {
+		Pedido p = new Pedido();
 		Item i = new Item();
 		i.setDescricao("Novo item 2");
 		i.setQtde(4);
 		i.setValorUnitario(4.32);
+		p.getItens().add(i);
 
-		(new ItemDAO()).getEntityManager().persist(i);
-		return i;
+		return p;
 	}
 
 	public Item getItem() {

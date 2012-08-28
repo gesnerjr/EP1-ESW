@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>EP1</title>
+<title>EP1 index pedido</title>
 </head>
 <body>
 

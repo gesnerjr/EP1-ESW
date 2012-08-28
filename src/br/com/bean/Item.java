@@ -1,5 +1,7 @@
 package br.com.bean;
 
+import java.text.DecimalFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -65,6 +67,12 @@ public class Item {
 
 	public void setValorUnitario(double valorUnitario) {
 		this.valorUnitario = valorUnitario;
+	}
+
+	public String getValorTotal() {
+		// /total do item
+		DecimalFormat df = new DecimalFormat("#,###.00");
+		return df.format(qtde * valorUnitario);
 	}
 
 }

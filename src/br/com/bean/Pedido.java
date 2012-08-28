@@ -1,5 +1,7 @@
 package br.com.bean;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,15 +30,21 @@ public class Pedido {
 	@Column(name = "id")
 	private int id;
 	@Column(name = "data")
-	private Date data;
+	private String data;
 	@Column(name = "cidade")
 	// bag, pegar do item
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "pedidos_itens", joinColumns = @JoinColumn(name = "pedido_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
-	private List<Item> itens = new ArrayList<Item>();
+	private List<Item> itens;
+
+	// Variavel responsavel pela conversao da data informada no cadastro ....
 
 	public Pedido() {
 		// TODO Auto-generated constructor stub
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		data = dateFormat.format(new Date());
+		cliente = "";
+		itens = new ArrayList<Item>();
 	}
 
 	public String getCliente() {
@@ -55,20 +63,46 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public Date getData() {
+	public String getData() {
+		if (data == null)
+			data = "";
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
 	public List<Item> getItens() {
+		if (itens == null)
+			itens = new ArrayList<Item>();
 		return itens;
 	}
 
 	public void setItens(List<Item> itens) {
 		this.itens = itens;
+	}
+
+	public String getValorTotal() {
+		// Pegar valor total do pedido direto com get do jsf....
+		if (itens == null)
+			return "0.00";
+		double total = 0;
+		for (Item ite : itens) {
+			total += (ite.getQtde() * ite.getValorUnitario());
+		}
+		DecimalFormat df = new DecimalFormat("#,###.00");
+		return df.format(total);
+	}
+
+	public int getQtdeItens() {
+		if (itens == null)
+			return 0;
+		int qt = 0;
+		for (Item ite : itens) {
+			qt += ite.getQtde();
+		}
+		return qt;
 	}
 
 }
